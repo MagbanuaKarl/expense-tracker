@@ -75,3 +75,65 @@ export interface ExpenseFilters {
   value: string; // e.g. "2024-03" for monthly, "2024-W12" for weekly
   category?: ExpenseCategory;
 }
+
+// ─── Salary and Budget Types ─────────────────────────────────────────────────
+
+export interface SalaryDeductions {
+  sss: number; // Social Security System
+  philHealth: number; // PhilHealth
+  pagIbig: number; // Pag-IBIG
+}
+
+export interface SalaryData {
+  monthlySalary: number;
+  customDeductions?: Partial<SalaryDeductions>; // Override standard deductions
+  allocations: {
+    necessities: number; // percentage
+    savings: number; // percentage
+    discretionary: number; // percentage
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export type AllocationType = "necessities" | "savings" | "discretionary";
+
+export const ALLOCATION_CATEGORIES: Record<AllocationType, ExpenseCategory[]> = {
+  necessities: [
+    "Food",
+    "Transportation",
+    "Bills",
+    "Housing",
+    "Utilities",
+    "Healthcare",
+    "Insurance",
+    "Education",
+    "Debt",
+    "Subscriptions",
+    "Personal Care",
+  ],
+  savings: ["Savings", "Investments"],
+  discretionary: [
+    "Shopping",
+    "Entertainment",
+    "Travel",
+    "Gifts & Donations",
+    "Miscellaneous",
+    "Luxury",
+  ],
+};
+
+export interface BudgetBreakdown {
+  grossMonthly: number;
+  standardDeductions: SalaryDeductions;
+  actualDeductions: SalaryDeductions;
+  annualTaxable: number;
+  annualTax: number;
+  monthlyTax: number;
+  netMonthly: number;
+  allocations: {
+    necessities: number;
+    savings: number;
+    discretionary: number;
+  };
+}

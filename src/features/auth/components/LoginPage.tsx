@@ -4,7 +4,11 @@ import { useState } from "react";
 import { signInWithGoogle } from "../services/authService";
 import styles from "./LoginPage.module.css";
 
-export function LoginPage() {
+interface LoginPageProps {
+  onDemo?: () => void;
+}
+
+export function LoginPage({ onDemo }: LoginPageProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +51,14 @@ export function LoginPage() {
         </button>
 
         {error && <p className={styles.error}>{error}</p>}
+
+        <button
+          className={styles.demoBtn}
+          onClick={() => onDemo?.()}
+          type="button"
+        >
+          Try demo without sign in
+        </button>
 
         <p className={styles.legal}>
           By continuing, you agree to our Terms of Service and Privacy Policy.

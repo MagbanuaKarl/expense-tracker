@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Expense } from "@/types";
 import { formatCurrency } from "@/lib/dateUtils";
 import { CATEGORY_META } from "./categoryMeta";
@@ -26,7 +27,13 @@ export function ExpenseItem({ expense, onEdit, onDelete }: ExpenseItemProps) {
   }
 
   return (
-    <div className={styles.item}>
+    <motion.div
+      className={styles.item}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.007 }}
+      transition={{ duration: 0.18 }}
+    >
       <div className={styles.categoryDot} style={{ background: meta.color }} />
       <div className={styles.info}>
         <div className={styles.top}>
@@ -54,6 +61,6 @@ export function ExpenseItem({ expense, onEdit, onDelete }: ExpenseItemProps) {
           {confirming ? "Sure?" : "Delete"}
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

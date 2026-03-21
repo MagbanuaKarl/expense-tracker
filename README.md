@@ -23,6 +23,7 @@ A clean, scalable expense tracker built with **Next.js 14 (App Router)**, **Fire
 ## Features
 
 - **Google Authentication** via Firebase Auth
+- **Demo mode (pre-signup)** — try adding/editing/deleting expenses before login (non-persistent)
 - **Add / Edit / Delete** expenses with validation
 - **19 fixed categories** — strictly validated, no custom entries
 - **Monthly & Weekly views** — navigate any past period
@@ -164,6 +165,14 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+### Demo mode (no Firebase write)
+
+1. On login page, click **Try demo without sign in**.
+2. Add or modify expenses in the same UI; these changes are stored in-memory only.
+3. Dashboard totals and charts update in real time.
+4. Click **Exit demo** to return to login;
+   demo data is not synced to Firebase.
 
 ---
 

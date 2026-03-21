@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { PeriodReport, ReportPeriod } from "@/types";
 import { formatCurrency, formatMonth, formatWeek } from "@/lib/dateUtils";
 import { CATEGORY_META } from "@/features/expenses/components/categoryMeta";
@@ -21,7 +22,12 @@ export function SummaryCard({ report, period }: SummaryCardProps) {
     : null;
 
   return (
-    <div className={styles.card}>
+    <motion.div
+      className={styles.card}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className={styles.header}>
         <span className={styles.label}>{label}</span>
         <span className={styles.count}>{report.expenseCount} expenses</span>
@@ -54,6 +60,6 @@ export function SummaryCard({ report, period }: SummaryCardProps) {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

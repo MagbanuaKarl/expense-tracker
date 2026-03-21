@@ -79,6 +79,21 @@
   padding: 28px 24px 64px;
 }
 
+.toast {
+  position: sticky;
+  top: 8px;
+  align-self: center;
+  z-index: 101;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #1c7f6f, #1b90b8);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  margin-bottom: 12px;
+}
+
 .content {
   max-width: 780px;
   margin: 0 auto;

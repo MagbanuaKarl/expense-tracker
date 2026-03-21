@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Expense, ExpenseInput, EXPENSE_CATEGORIES } from "@/types";
 import { todayString } from "@/lib/dateUtils";
 import styles from "./ExpenseForm.module.css";
@@ -55,8 +56,19 @@ export function ExpenseForm({
   }
 
   return (
-    <div className={styles.overlay} onClick={(e) => e.target === e.currentTarget && onCancel()}>
-      <div className={styles.modal}>
+    <motion.div
+      className={styles.overlay}
+      onClick={(e) => e.target === e.currentTarget && onCancel()}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className={styles.modal}
+        initial={{ y: 20, opacity: 0, scale: 0.98 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2 }}
+      >
         <div className={styles.header}>
           <h2 className={styles.title}>{isEditing ? "Edit Expense" : "Add Expense"}</h2>
           <button className={styles.closeBtn} onClick={onCancel} aria-label="Close">
@@ -68,7 +80,7 @@ export function ExpenseForm({
           <div className={styles.field}>
             <label className={styles.label}>Amount</label>
             <div className={styles.amountWrapper}>
-              <span className={styles.currencySymbol}>$</span>
+              <span className={styles.currencySymbol}>₱</span>
               <input
                 className={styles.amountInput}
                 type="number"
@@ -143,7 +155,7 @@ export function ExpenseForm({
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -1,21 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { LoginPage } from "@/features/auth/components/LoginPage";
 import { Dashboard } from "@/features/expenses/components/Dashboard";
 
 export default function Home() {
   const { user, loading } = useAuth();
+  const [demoMode, setDemoMode] = useState(false);
 
   if (loading) {
     return <AppLoader />;
   }
 
-  if (!user) {
-    return <LoginPage />;
+  if (!user && !demoMode) {
+    return <LoginPage onDemo={() => setDemoMode(true)} />;
   }
 
-  return <Dashboard user={user} />;
+  const demoUser = {
+    uid: "demo",
+    displayName: "Demo User",
+    photoURL: "",
+  } as unknown as import("firebase/auth").User;
+
+  return (
+    <Dashboard
+      user={user ?? demoUser}
+      isDemo={demoMode}
+      onExitDemo={() => setDemoMode(false)}
+    />
+  );
 }
 
 function AppLoader() {

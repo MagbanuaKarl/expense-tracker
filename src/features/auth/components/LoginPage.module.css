@@ -116,6 +116,33 @@
   text-align: center;
 }
 
+.compare {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.demoBtn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 2px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: var(--font-body);
+}
+
+.demoBtn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
 .legal {
   margin-top: 20px;
   font-size: 11px;

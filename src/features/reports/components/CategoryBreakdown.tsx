@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { PeriodReport } from "@/types";
 import { formatCurrency } from "@/lib/dateUtils";
 import { CATEGORY_META } from "@/features/expenses/components/categoryMeta";
@@ -17,7 +18,12 @@ export function CategoryBreakdown({ report }: CategoryBreakdownProps) {
   const maxTotal = report.breakdown[0].total;
 
   return (
-    <div className={styles.container}>
+    <motion.div
+      className={styles.container}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+    >
       <h3 className={styles.heading}>Category Breakdown</h3>
 
       {/* Stacked bar */}
@@ -72,6 +78,6 @@ export function CategoryBreakdown({ report }: CategoryBreakdownProps) {
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }
