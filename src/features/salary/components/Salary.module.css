@@ -1,0 +1,295 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.iconCircle {
+  display: inline-flex;
+  width: 56px;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1e3a8a, #7c3aed);
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.stepper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.stepperInner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem;
+}
+
+.stepBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  min-width: 130px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.stepBtn:hover {
+  background: var(--bg-hover);
+}
+
+.stepBtnActive {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.stepBtnCompleted {
+  background: #2dd4bf;
+  color: #0f172a;
+}
+
+.stepConnector {
+  width: 1rem;
+  height: 0.4rem;
+  background: var(--border);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  padding: 1.25rem;
+}
+
+.cardSpacing {
+  margin-bottom: 2rem;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textMuted {
+  color: var(--text-muted);
+}
+
+.gridTwo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .gridTwo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.smallCard {
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: #111319;
+}
+
+.smallCardPrimary {
+  background: #101827;
+}
+
+.flexBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.valuePrimary {
+  font-weight: 700;
+}
+
+.valueGreen {
+  color: #34d399;
+}
+
+.valueBlue {
+  color: #60a5fa;
+}
+
+.valuePurple {
+  color: #a78bfa;
+}
+
+.warningBox {
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.warningValid {
+  background: #042f25;
+  color: #a7f3d0;
+}
+
+.warningInvalid {
+  background: #1f2937;
+  color: #fca5a5;
+}
+
+.btnPrimary {
+  width: 100%;
+  border: 0;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #a855f7);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnPrimary:hover {
+  filter: brightness(1.05);
+}
+
+.btnDisabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid #374151;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.inputFocus:focus {
+  outline: 2px solid #60a5fa;
+  border-color: #60a5fa;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.helpCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 0.75rem;
+  background: #334155;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFillGreen {
+  background: #34d399;
+  height: 100%;
+}
+
+.progressFillYellow {
+  background: #facc15;
+  height: 100%;
+}
+
+.progressFillRed {
+  background: #f87171;
+  height: 100%;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 4px solid rgba(255, 255, 255, 0.15);
+  border-bottom-color: #60a5fa;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.stepConnectorComplete {
+  background: #34d399;
+}
+
+.footerText {
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.allocationCard {
+  background: #111827;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.allocationCardHeader {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.progressContainer {
+  margin-top: 0.5rem;
+}

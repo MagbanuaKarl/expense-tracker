@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { BudgetBreakdown, ALLOCATION_CATEGORIES, AllocationType, ExpenseFilters } from "@/types";
+import styles from "./Salary.module.css";
 import { useExpenses } from "@/features/expenses/hooks/useExpenses";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { currentMonth } from "@/lib/dateUtils";
@@ -47,40 +48,34 @@ export function BudgetOverview({ breakdown }: BudgetOverviewProps) {
   const formatCurrency = (amount: number) => `₱${amount.toLocaleString("en-PH", { minimumFractionDigits: 2 })}`;
 
   if (loading) {
-    return <div className="text-center py-8">Loading expense data...</div>;
+    return <div className={styles.textCenter} style={{ padding: '2rem 0' }}>Loading expense data...</div>;
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6">Budget Overview</h2>
+      <h2 className={styles.title}>Budget Overview</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Summary Cards */}
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <h3 className="font-medium text-blue-900 mb-2">Net Monthly Income</h3>
-          <p className="text-2xl font-bold text-blue-600">{formatCurrency(breakdown.netMonthly)}</p>
+      <div className={styles.gridTwo} style={{ marginBottom: '1.5rem' }}>
+        <div className={styles.allocationCard}>
+          <h3 className={styles.allocationCardHeader}>Net Monthly Income</h3>
+          <p className={styles.valueBlue}>{formatCurrency(breakdown.netMonthly)}</p>
         </div>
 
-        <div className="bg-green-50 p-4 rounded-lg">
-          <h3 className="font-medium text-green-900 mb-2">Total Allocated</h3>
-          <p className="text-2xl font-bold text-green-600">{formatCurrency(breakdown.netMonthly)}</p>
+        <div className={styles.allocationCard}>
+          <h3 className={styles.allocationCardHeader}>Total Allocated</h3>
+          <p className={styles.valueGreen}>{formatCurrency(breakdown.netMonthly)}</p>
         </div>
 
-        <div className="bg-purple-50 p-4 rounded-lg">
-          <h3 className="font-medium text-purple-900 mb-2">Total Spent This Month</h3>
-          <p className="text-2xl font-bold text-purple-600">
-            {formatCurrency(
-              (spendingByAllocation.necessities || 0) +
-                (spendingByAllocation.savings || 0) +
-                (spendingByAllocation.discretionary || 0)
-            )}
+        <div className={styles.allocationCard}>
+          <h3 className={styles.allocationCardHeader}>Total Spent This Month</h3>
+          <p className={styles.valuePurple}>
+            {formatCurrency((spendingByAllocation.necessities || 0) + (spendingByAllocation.savings || 0) + (spendingByAllocation.discretionary || 0))}
           </p>
         </div>
       </div>
 
-      {/* Allocation Breakdown */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-medium">Monthly Budget Breakdown</h3>
+      <div style={{ display: 'grid', gap: '0.8rem' }}>
+        <h3 className={styles.allocationCardHeader}>Monthly Budget Breakdown</h3>
 
         {Object.entries(ALLOCATION_CATEGORIES).map(([allocationType, categories]) => {
           const allocated = breakdown.allocations[allocationType as AllocationType];
@@ -88,35 +83,30 @@ export function BudgetOverview({ breakdown }: BudgetOverviewProps) {
           const remaining = allocated - spent;
           const percentage = (spent / allocated) * 100;
 
+          const barClass = percentage > 100 ? styles.progressFillRed : percentage > 80 ? styles.progressFillYellow : styles.progressFillGreen;
+
           return (
-            <div key={allocationType} className="border rounded-lg p-4">
-              <div className="flex justify-between items-start mb-3">
+            <div key={allocationType} className={styles.allocationCard}>
+              <div className={styles.flexBetween} style={{ marginBottom: '0.6rem' }}>
                 <div>
-                  <h4 className="font-medium capitalize">{allocationType}</h4>
-                  <p className="text-sm text-gray-600">
-                    {categories.join(", ")}
-                  </p>
+                  <h4 className={styles.allocationCardHeader} style={{ textTransform: 'capitalize', margin: 0 }}>{allocationType}</h4>
+                  <p style={{ color: 'var(--text-muted)', margin: '0.2rem 0 0', fontSize: '0.9rem' }}>{categories.join(', ')}</p>
                 </div>
-                <div className="text-right">
-                  <p className="font-medium">{formatCurrency(allocated)}</p>
-                  <p className="text-sm text-gray-600">allocated</p>
+                <div style={{ textAlign: 'right' }}>
+                  <p style={{ margin: 0, fontWeight: 700 }}>{formatCurrency(allocated)}</p>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>allocated</p>
                 </div>
               </div>
 
-              <div className="mb-2">
-                <div className="flex justify-between text-sm mb-1">
+              <div style={{ marginBottom: '0.5rem' }}>
+                <div className={styles.flexBetween} style={{ fontSize: '0.9rem', marginBottom: '0.3rem' }}>
                   <span>Spent: {formatCurrency(spent)}</span>
                   <span>Remaining: {formatCurrency(remaining)}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className={`h-2 rounded-full ${
-                      percentage > 100 ? "bg-red-500" : percentage > 80 ? "bg-yellow-500" : "bg-green-500"
-                    }`}
-                    style={{ width: `${Math.min(percentage, 100)}%` }}
-                  ></div>
+                <div className={styles.progressBar}>
+                  <div className={barClass} style={{ width: `${Math.min(percentage, 100)}%` }} />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.4rem' }}>
                   {percentage.toFixed(1)}% of allocated budget used
                 </p>
               </div>
@@ -125,9 +115,9 @@ export function BudgetOverview({ breakdown }: BudgetOverviewProps) {
         })}
       </div>
 
-      <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-        <h4 className="font-medium mb-2">💡 Tips</h4>
-        <ul className="text-sm text-gray-600 space-y-1">
+      <div className={styles.allocationCard} style={{ marginTop: '1rem' }}>
+        <h4 className={styles.allocationCardHeader} style={{ marginBottom: '0.5rem' }}>💡 Tips</h4>
+        <ul style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>
           <li>• Track your expenses regularly to stay within your allocations</li>
           <li>• Adjust your allocations if your spending patterns change</li>
           <li>• Consider increasing savings if you're consistently under budget</li>

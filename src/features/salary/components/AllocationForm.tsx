@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { SalaryData } from "@/types";
+import styles from "./Salary.module.css";
 
 interface AllocationFormProps {
   allocations: SalaryData["allocations"];
@@ -34,86 +35,65 @@ export function AllocationForm({ allocations, onSave, saving }: AllocationFormPr
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6">Budget Allocation</h2>
-      <p className="text-gray-600 mb-6">
+      <h2 className={styles.title}>Budget Allocation</h2>
+      <p className={styles.subtitle} style={{ marginBottom: '1.5rem' }}>
         Allocate your after-tax income across three categories. The percentages must total 100%.
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Necessities */}
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h3 className="font-medium text-blue-900 mb-2">Necessities</h3>
-            <p className="text-sm text-blue-700 mb-3">
-              Essential expenses like food, housing, utilities, transportation, healthcare, etc.
-            </p>
-            <div className="flex items-center space-x-2">
-              <input
-                type="number"
-                value={necessities}
-                onChange={(e) => setNecessities(e.target.value)}
-                className="w-20 px-2 py-1 border border-gray-300 rounded text-center"
-                min="0"
-                max="100"
-                step="1"
-                required
-              />
-              <span className="text-sm">%</span>
+      <form onSubmit={handleSubmit} className={styles.container}>
+        <div className={styles.gridTwo}>
+          {[
+            {
+              key: 'necessities',
+              label: 'Necessities',
+              note: 'Essential expenses like food, housing, utilities, transportation, healthcare, etc.',
+              value: necessities,
+              setter: setNecessities,
+            },
+            {
+              key: 'savings',
+              label: 'Savings',
+              note: 'Money set aside for emergencies, investments, and future goals.',
+              value: savings,
+              setter: setSavings,
+            },
+            {
+              key: 'discretionary',
+              label: 'Discretionary',
+              note: 'Optional spending like entertainment, shopping, travel, and luxury items.',
+              value: discretionary,
+              setter: setDiscretionary,
+            },
+          ].map((item) => (
+            <div key={item.key} className={styles.allocationCard}>
+              <h3 className={styles.allocationCardHeader}>{item.label}</h3>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '0.75rem' }}>{item.note}</p>
+              <div className={styles.flexRow} style={{ justifyContent: 'flex-start' }}>
+                <input
+                  type="number"
+                  value={item.value}
+                  onChange={(e) => item.setter(e.target.value)}
+                  className={styles.input}
+                  style={{ width: '4rem', textAlign: 'center' }}
+                  min="0"
+                  max="100"
+                  step="1"
+                  required
+                />
+                <span style={{ color: 'var(--text-primary)' }}>%</span>
+              </div>
             </div>
-          </div>
-
-          {/* Savings */}
-          <div className="bg-green-50 p-4 rounded-lg">
-            <h3 className="font-medium text-green-900 mb-2">Savings</h3>
-            <p className="text-sm text-green-700 mb-3">
-              Money set aside for emergencies, investments, and future goals.
-            </p>
-            <div className="flex items-center space-x-2">
-              <input
-                type="number"
-                value={savings}
-                onChange={(e) => setSavings(e.target.value)}
-                className="w-20 px-2 py-1 border border-gray-300 rounded text-center"
-                min="0"
-                max="100"
-                step="1"
-                required
-              />
-              <span className="text-sm">%</span>
-            </div>
-          </div>
-
-          {/* Discretionary */}
-          <div className="bg-purple-50 p-4 rounded-lg">
-            <h3 className="font-medium text-purple-900 mb-2">Discretionary</h3>
-            <p className="text-sm text-purple-700 mb-3">
-              Optional spending like entertainment, shopping, travel, and luxury items.
-            </p>
-            <div className="flex items-center space-x-2">
-              <input
-                type="number"
-                value={discretionary}
-                onChange={(e) => setDiscretionary(e.target.value)}
-                className="w-20 px-2 py-1 border border-gray-300 rounded text-center"
-                min="0"
-                max="100"
-                step="1"
-                required
-              />
-              <span className="text-sm">%</span>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Total Validation */}
-        <div className={`p-4 rounded-lg ${isValid ? "bg-green-50 text-green-800" : "bg-red-50 text-red-800"}`}>
-          <div className="flex justify-between items-center">
-            <span className="font-medium">Total Allocation:</span>
-            <span className="font-bold">{total}%</span>
+        <div className={`${styles.warningBox} ${isValid ? styles.warningValid : styles.warningInvalid}`}>
+          <div className={styles.flexBetween}>
+            <span className={styles.valuePrimary}>Total Allocation:</span>
+            <span className={styles.valuePrimary}>{total}%</span>
           </div>
           {!isValid && (
-            <p className="text-sm mt-1">
-              {total < 100 ? "Increase percentages to reach 100%." : "Decrease percentages to reach 100%."}
+            <p style={{ marginTop: '0.5rem', color: 'inherit' }}>
+              {total < 100 ? 'Increase percentages to reach 100%.' : 'Decrease percentages to reach 100%.'}
             </p>
           )}
         </div>
@@ -121,9 +101,10 @@ export function AllocationForm({ allocations, onSave, saving }: AllocationFormPr
         <button
           type="submit"
           disabled={saving || !isValid}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          className={`${styles.btnPrimary} ${(saving || !isValid) ? styles.btnDisabled : ''}`}
+          style={{ marginTop: '0.25rem' }}
         >
-          {saving ? "Saving..." : "Save Allocation & View Budget Overview"}
+          {saving ? 'Saving...' : 'Save Allocation & View Budget Overview'}
         </button>
       </form>
     </div>
